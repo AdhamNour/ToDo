@@ -6,9 +6,12 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (ctx, index) => TaskListItem(taskName: "Task #$index", haveSubTasks: index%2==0,),
-      itemCount: 15,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListView.builder(
+        itemBuilder: (ctx, index) => TaskListItem(taskName: "Task #$index", haveSubTasks: index%2==0,),
+        itemCount: 15,shrinkWrap: true,
+      ),
     );
   }
 }
