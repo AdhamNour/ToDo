@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/Database/TaskViews.dart';
 import 'package:todo/components/TaskList/TaskList.dart';
+import 'package:todo/providers/Tasks.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,9 +17,7 @@ class HomeScreen extends StatelessWidget {
       body: TaskList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          tasks.insert(
-            title: 'random',
-          );
+          tasks.addTask(taskName: 'random');
         },
         child: Icon(Icons.add),
         tooltip: 'Add New Task',

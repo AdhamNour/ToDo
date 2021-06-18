@@ -1,28 +1,30 @@
 import 'dart:convert';
 
-class Task {
+import 'package:flutter/cupertino.dart';
+
+class Task extends ChangeNotifier {
     final String title;
     final int? id;
     final int? parent;
-    final int? child;
+    final bool? done;
   Task({
     required this.title,
     this.id,
     this.parent,
-    this.child,
+    this.done=false,
   });
 
   Task copyWith({
     String? title,
     int? id,
     int? parent,
-    int? child,
+    bool? done,
   }) {
     return Task(
       title: title ?? this.title,
       id: id ?? this.id,
       parent: parent ?? this.parent,
-      child: child ?? this.child,
+      done: done ?? this.done,
     );
   }
 
@@ -30,7 +32,7 @@ class Task {
     return {
       'title': title,
       'parent': parent,
-      'child': child,
+      'done': done,
     };
   }
 
@@ -39,7 +41,7 @@ class Task {
       title: map['title'],
       id: map['id'],
       parent: map['parent'],
-      child: map['child'],
+      done: map['done'],
     );
   }
 
@@ -49,7 +51,7 @@ class Task {
 
   @override
   String toString() {
-    return 'Task(title: $title, id: $id, parent: $parent, child: $child)';
+    return 'Task(title: $title, id: $id, parent: $parent, done: $done)';
   }
 
   @override
@@ -60,7 +62,7 @@ class Task {
       other.title == title &&
       other.id == id &&
       other.parent == parent &&
-      other.child == child;
+      other.done == done;
   }
 
   @override
@@ -68,6 +70,12 @@ class Task {
     return title.hashCode ^
       id.hashCode ^
       parent.hashCode ^
-      child.hashCode;
+      done.hashCode;
   }
+
+  void setDone(){
+    copyWith(done: !done!);
+    notifyListeners();
+  }
+
 }

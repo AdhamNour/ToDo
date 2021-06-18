@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/Database/TaskViews.dart';
 import 'package:todo/components/TaskList/TaskListItem/TaskListItem.dart';
+import 'package:todo/providers/Tasks.dart';
 
 class TaskList extends StatelessWidget {
   const TaskList({Key? key}) : super(key: key);
@@ -13,8 +13,12 @@ class TaskList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ListView.builder(
-        itemBuilder: (ctx, index) => TaskListItem(taskName: "Task #$index", haveSubTasks: index%2==0,),
-        itemCount: tasks.length,shrinkWrap: true,
+        itemBuilder: (ctx, index) => ChangeNotifierProvider(
+          create: (ctx) => tasks[index],
+          child: TaskListItem(),
+        ),
+        itemCount: tasks.length,
+        shrinkWrap: true,
       ),
     );
   }

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/components/TaskList/TaskList.dart';
+import 'package:todo/providers/Models/Task.dart';
 
 class TaskListItem extends StatefulWidget {
-  final String taskName;
-  final bool haveSubTasks;
-  const TaskListItem(
-      {Key? key, required this.taskName, required this.haveSubTasks})
-      : super(key: key);
+  const TaskListItem({Key? key}) : super(key: key);
 
   @override
   _TaskListItemState createState() => _TaskListItemState();
@@ -14,21 +12,13 @@ class TaskListItem extends StatefulWidget {
 
 class _TaskListItemState extends State<TaskListItem> {
   bool? checked;
-  bool expanded = false;
   Function(bool?)? setChecked;
-  Function()? setExpanded;
   @override
   void initState() {
-    checked = false;
+    //checked = false;
     setChecked = (newValue) {
       setState(() {
         checked = newValue;
-      });
-    };
-    setExpanded = () {
-      print('kak');
-      setState(() {
-        expanded = !expanded;
       });
     };
     super.initState();
@@ -37,20 +27,27 @@ class _TaskListItemState extends State<TaskListItem> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+    final targetTask = Provider.of<Task>(context);
     return Card(
       child: Container(
-        height: expanded?screenSize.height*0.5:null,
         child: Column(
           children: [
             ListTile(
-              leading: Checkbox(value: checked, onChanged: setChecked),
-              title: Text(widget.taskName),
-              trailing: widget.haveSubTasks
-                  ? IconButton(
-                      onPressed: setExpanded, icon: Icon(Icons.arrow_drop_down))
-                  : null,
-            ),
-            if (expanded) Container(child: TaskList(),height: screenSize.height*0.40,)
+              leading: Checkbox(
+                value: checked,
+                onChanged: (value) {
+                  targetTask.setDone();
+                  setChecked!(value);
+                },
+              ),
+              title: Text(targetTask.title),
+              //   trailing: widget.haveSubTasks
+              //       ? IconButton(
+              //           onPressed: setExpanded, icon: Icon(Icons.arrow_drop_down))
+              //       : null,
+              // ),
+              // if (expanded) Container(child: TaskList(),height: screenSize.height*0.40,)
+            )
           ],
           mainAxisSize: MainAxisSize.min,
         ),
