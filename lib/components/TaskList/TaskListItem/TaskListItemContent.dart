@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/Models/Task.dart';
 import 'package:todo/components/TaskList/TaskList.dart';
+import 'package:todo/screens/TaskScreen.dart';
 
 class TaskListItemContent extends StatefulWidget {
   final Task targetTask;
@@ -49,8 +50,10 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
                       },
                       icon: Icon(Icons.arrow_drop_down))
                   : null,
+              onTap: () =>
+                  Navigator.of(context).pushNamed(TaskScreen.routeName),
             ),
-            if (expanded&&widget.targetTask.haschildren)
+            if (expanded && widget.targetTask.haschildren)
               Container(
                 child: TaskList(parent: widget.targetTask.id),
                 height: screenSize.height * 0.40,
