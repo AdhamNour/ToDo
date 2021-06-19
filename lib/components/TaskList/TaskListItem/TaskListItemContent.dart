@@ -29,7 +29,6 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
 
   @override
   Widget build(BuildContext context) {
-    print("Task with id ${widget.targetTask.id} => ${widget.targetTask.haschildren}");
     final screenSize = MediaQuery.of(context).size;
     return Card(
       child: Container(
