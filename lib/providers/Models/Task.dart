@@ -2,16 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 
-class Task extends ChangeNotifier {
-    final String title;
-    final int? id;
-    final int? parent;
-    final bool? done;
+class Task {
+  String title;
+  final int? id;
+  int? parent;
+  bool? done;
   Task({
     required this.title,
     this.id,
     this.parent,
-    this.done=false,
+    this.done = false,
   });
 
   Task copyWith({
@@ -57,25 +57,16 @@ class Task extends ChangeNotifier {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is Task &&
-      other.title == title &&
-      other.id == id &&
-      other.parent == parent &&
-      other.done == done;
+        other.title == title &&
+        other.id == id &&
+        other.parent == parent &&
+        other.done == done;
   }
 
   @override
   int get hashCode {
-    return title.hashCode ^
-      id.hashCode ^
-      parent.hashCode ^
-      done.hashCode;
+    return title.hashCode ^ id.hashCode ^ parent.hashCode ^ done.hashCode;
   }
-
-  void setDone(){
-    copyWith(done: !done!);
-    notifyListeners();
-  }
-
 }

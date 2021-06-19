@@ -4,7 +4,8 @@ import 'package:todo/components/TaskList/TaskList.dart';
 import 'package:todo/providers/Models/Task.dart';
 
 class TaskListItem extends StatefulWidget {
-  const TaskListItem({Key? key}) : super(key: key);
+  final Task targetTask;
+  const TaskListItem({Key? key,required this.targetTask}) : super(key: key);
 
   @override
   _TaskListItemState createState() => _TaskListItemState();
@@ -15,9 +16,10 @@ class _TaskListItemState extends State<TaskListItem> {
   Function(bool?)? setChecked;
   @override
   void initState() {
-    //checked = false;
+    checked = widget.targetTask.done;
     setChecked = (newValue) {
       setState(() {
+        widget.targetTask.done=newValue;
         checked = newValue;
       });
     };
@@ -27,7 +29,6 @@ class _TaskListItemState extends State<TaskListItem> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final targetTask = Provider.of<Task>(context);
     return Card(
       child: Container(
         child: Column(
@@ -35,12 +36,9 @@ class _TaskListItemState extends State<TaskListItem> {
             ListTile(
               leading: Checkbox(
                 value: checked,
-                onChanged: (value) {
-                  targetTask.setDone();
-                  setChecked!(value);
-                },
+                onChanged: setChecked,
               ),
-              title: Text(targetTask.title),
+              title: Text(widget.targetTask.title),
               //   trailing: widget.haveSubTasks
               //       ? IconButton(
               //           onPressed: setExpanded, icon: Icon(Icons.arrow_drop_down))

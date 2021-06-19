@@ -13,10 +13,10 @@ class TaskList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ListView.builder(
-        itemBuilder: (ctx, index) => ChangeNotifierProvider(
-          create: (ctx) => tasks[index],
-          child: TaskListItem(),
-        ),
+        itemBuilder: (ctx, index) {
+          print("AN $index ${tasks[index]}");
+          return TaskListItem(targetTask: tasks[index],);
+        },
         itemCount: tasks.length,
         shrinkWrap: true,
       ),
