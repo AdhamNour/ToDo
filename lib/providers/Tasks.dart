@@ -18,9 +18,14 @@ class Tasks extends ChangeNotifier {
   }
 
   void setParentOf({required int parentID, required int childID}) {
+    int? prevParent = _tasks[childID].parent;
     _tasks[childID].parent = parentID;
-    _tasks[parentID].children.add(childID);
+    _tasks[parentID].haschildren =
+        _tasks.indexWhere((element) => element.parent == parentID) != -1;
+    if(prevParent != null){
+      _tasks[prevParent].haschildren =
+        _tasks.indexWhere((element) => element.parent == prevParent) != -1;
+    }
     notifyListeners();
   }
-  
 }

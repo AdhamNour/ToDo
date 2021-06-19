@@ -4,14 +4,14 @@ import 'package:todo/components/TaskList/TaskList.dart';
 
 class TaskListItemContent extends StatefulWidget {
   final Task targetTask;
-  const TaskListItemContent({ Key? key , required this.targetTask}) : super(key: key);
+  const TaskListItemContent({Key? key, required this.targetTask})
+      : super(key: key);
 
   @override
   _TaskListItemContentState createState() => _TaskListItemContentState();
 }
 
 class _TaskListItemContentState extends State<TaskListItemContent> {
-
   bool? checked;
   bool expanded = false;
   Function(bool?)? setChecked;
@@ -29,6 +29,7 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
 
   @override
   Widget build(BuildContext context) {
+    print("Task with id ${widget.targetTask.id} => ${widget.targetTask.haschildren}");
     final screenSize = MediaQuery.of(context).size;
     return Card(
       child: Container(
@@ -40,15 +41,17 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
                 onChanged: setChecked,
               ),
               title: Text(widget.targetTask.title),
-              trailing: widget.targetTask.children.isNotEmpty
+              trailing: widget.targetTask.haschildren
                   ? IconButton(
                       onPressed: () {
-                        expanded = !expanded;
+                        setState(() {
+                          expanded = !expanded;
+                        });
                       },
                       icon: Icon(Icons.arrow_drop_down))
                   : null,
             ),
-            if (expanded)
+            if (expanded&&widget.targetTask.haschildren)
               Container(
                 child: TaskList(parent: widget.targetTask.id),
                 height: screenSize.height * 0.40,
