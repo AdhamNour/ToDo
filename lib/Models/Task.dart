@@ -7,6 +7,7 @@ class Task {
   final int? id;
   int? parent;
   bool? done;
+  List<int> children=[];
   Task({
     required this.title,
     this.id,
