@@ -1,0 +1,2 @@
+1- clean the home screen
+2- Impelement the task screen
