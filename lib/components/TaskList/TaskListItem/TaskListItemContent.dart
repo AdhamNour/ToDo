@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/Models/Task.dart';
 import 'package:todo/components/TaskList/TaskList.dart';
+import 'package:todo/providers/Tasks.dart';
 import 'package:todo/screens/TaskScreen.dart';
 
 class TaskListItemContent extends StatefulWidget {
@@ -38,7 +40,15 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
             ListTile(
               leading: Checkbox(
                 value: checked,
-                onChanged: setChecked,
+                onChanged: (newValue) {
+                  setState(() {
+                    widget.targetTask.done = newValue;
+                    checked = newValue;
+                    expanded=false;
+                  });
+                  Provider.of<Tasks>(context,listen: false)
+                      .setDoneForAllChildrenof(parentID: widget.targetTask.id!,value: newValue);
+                },
               ),
               title: Text(widget.targetTask.title),
               trailing: widget.targetTask.haschildren
@@ -56,7 +66,7 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
             if (expanded && widget.targetTask.haschildren)
               Container(
                 child: TaskList(parent: widget.targetTask.id),
-                height: screenSize.height * 0.40,
+                height: screenSize.height * 0.20,
               )
           ],
           mainAxisSize: MainAxisSize.min,

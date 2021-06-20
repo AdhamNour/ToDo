@@ -28,4 +28,13 @@ class Tasks extends ChangeNotifier {
     }
     notifyListeners();
   }
+  void setDoneForAllChildrenof({required int parentID, required bool? value}){
+    List<Task> targetTasks = _tasks.where((element) => element.parent==parentID).toList();
+    for (var i = 0; i < targetTasks.length; i++) {
+      targetTasks = [...targetTasks,..._tasks.where((element) => element.parent==targetTasks[i].id).toList()];
+      int x =targetTasks[i].id??-1;
+      _tasks[x].done = value;
+    }
+    notifyListeners();
+  }
 }

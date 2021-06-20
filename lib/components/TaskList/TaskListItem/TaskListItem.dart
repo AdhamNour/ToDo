@@ -13,12 +13,14 @@ class TaskListItem extends StatefulWidget {
 }
 
 class _TaskListItemState extends State<TaskListItem> {
+  bool passing = false;
   @override
   Widget build(BuildContext context) {
+    print('[AdhamNour][TaskListItem]${widget.targetTask}');
     return DragTarget<int>(
       builder: (context, candidateData, rejectedData) {
         return LongPressDraggable<int>(
-          child: TaskListItemContent(targetTask: widget.targetTask),
+          child: Container(child: TaskListItemContent(targetTask: widget.targetTask),color: Color.fromARGB(passing?100:0, 0, 0, 0),),
           feedback: Card(
             child: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -35,7 +37,22 @@ class _TaskListItemState extends State<TaskListItem> {
         );
       },
       onWillAccept: (data) => data!=widget.targetTask.id,
-      onAccept: (data) => Provider.of<Tasks>(context,listen: false).setParentOf(parentID: widget.targetTask.id!, childID: data),
+      onAccept: (data) {
+        Provider.of<Tasks>(context,listen: false).setParentOf(parentID: widget.targetTask.id!, childID: data);
+        setState(() {
+          passing = false;
+        });
+      },
+      onMove: (details) {
+        setState(() {
+          passing = true;
+        });
+      },
+      onLeave: (data) {
+        setState(() {
+          passing = false;
+        });
+      },
     );
   }
 }
