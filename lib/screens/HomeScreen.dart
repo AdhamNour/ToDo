@@ -78,25 +78,28 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                 labelText: "Task Title",
                 prefixIcon: Icon(Icons.title)),
           ),
-          Row(
-            children: [
-              Text(date == null
-                  ? 'selected a deadline'
-                  : DateFormat.yMd().format(date!)),
-              IconButton(
-                  onPressed: () {
-                    showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime(2100, 12, 31))
-                        .then((value) => setState(() {
-                              date = value;
-                            }));
-                  },
-                  icon: Icon(Icons.calendar_today_sharp))
-            ],
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Text(date == null
+                    ? 'selected a deadline'
+                    : DateFormat.yMd().format(date!)),
+                IconButton(
+                    onPressed: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2100, 12, 31))
+                          .then((value) => setState(() {
+                                date = value;
+                              }));
+                    },
+                    icon: Icon(Icons.calendar_today_sharp))
+              ],
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
           )
         ],
       ),
