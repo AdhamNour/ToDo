@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/Models/Task.dart';
 import 'package:todo/components/TaskList/TaskList.dart';
@@ -44,22 +45,28 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
                   setState(() {
                     widget.targetTask.done = newValue;
                     checked = newValue;
-                    expanded=false;
+                    expanded = false;
                   });
-                  Provider.of<Tasks>(context,listen: false)
-                      .setDoneForAllChildrenof(parentID: widget.targetTask.id!,value: newValue);
+                  Provider.of<Tasks>(context, listen: false)
+                      .setDoneForAllChildrenof(
+                          parentID: widget.targetTask.id!, value: newValue);
                 },
               ),
               title: Text(widget.targetTask.title),
-              trailing: widget.targetTask.haschildren
-                  ? IconButton(
-                      onPressed: () {
-                        setState(() {
-                          expanded = !expanded;
-                        });
-                      },
-                      icon: Icon(Icons.arrow_drop_down))
-                  : null,
+              trailing: Row(
+                children: [
+                  if(widget.targetTask.deadline!=null) Text(DateFormat('d/M/y').format(DateTime.now())),
+                  if (widget.targetTask.haschildren)
+                    IconButton(
+                        onPressed: () {
+                          setState(() {
+                            expanded = !expanded;
+                          });
+                        },
+                        icon: Icon(Icons.arrow_drop_down)),
+                ],
+                mainAxisSize: MainAxisSize.min,
+              ),
               onTap: () =>
                   Navigator.of(context).pushNamed(TaskScreen.routeName),
             ),

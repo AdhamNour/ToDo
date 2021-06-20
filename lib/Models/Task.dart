@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 
 class Task {
   String title;
@@ -8,11 +7,13 @@ class Task {
   int? parent;
   bool? done;
   bool haschildren=false;
+  DateTime? deadline;
   Task({
     required this.title,
     this.id,
     this.parent,
     this.done = false,
+    this.deadline
   });
 
   Task copyWith({

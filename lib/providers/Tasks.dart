@@ -7,7 +7,7 @@ class Tasks extends ChangeNotifier {
     return [..._tasks.where((element) => element.parent == parent).toList()];
   }
 
-  void addTask({required String taskName}) {
+  void addTask({required String taskName,DateTime? deadline}) {
     _tasks.add(Task(title: taskName, id: _tasks.length));
     notifyListeners();
   }
