@@ -68,7 +68,7 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
                 mainAxisSize: MainAxisSize.min,
               ),
               onTap: () =>
-                  Navigator.of(context).pushNamed(TaskScreen.routeName),
+                  Navigator.of(context).pushNamed(TaskScreen.routeName,arguments: widget.targetTask),
             ),
             if (expanded && widget.targetTask.haschildren)
               Container(
