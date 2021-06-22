@@ -1,2 +1,1 @@
-1- clean the home screen
-2- Impelement the task screen
+1- add the availablity of draging out the child
