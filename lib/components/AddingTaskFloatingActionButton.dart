@@ -23,7 +23,7 @@ class AddingTaskFloatingActionButton extends StatelessWidget {
             return AddTaskDialog(controller: _controller);
           },
         ).then((value) {
-          if (value['title'] == null) {
+          if (value == null) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text("Task is canceled")));
             return;
