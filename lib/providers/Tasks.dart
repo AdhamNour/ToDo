@@ -7,8 +7,8 @@ class Tasks extends ChangeNotifier {
     return [..._tasks.where((element) => element.parent == parent).toList()];
   }
 
-  void addTask({required String taskName,DateTime? deadline}) {
-    _tasks.add(Task(title: taskName, id: _tasks.length));
+  void addTask({required String taskName,DateTime? deadline, int? parent}) {
+    _tasks.add(Task(title: taskName, id: _tasks.length,parent: parent));
     notifyListeners();
   }
 
@@ -35,6 +35,15 @@ class Tasks extends ChangeNotifier {
       int x =targetTasks[i].id??-1;
       _tasks[x].done = value;
     }
+    notifyListeners();
+  }
+
+  void setTitleOf({required int id, required String newTitle}){
+    _tasks[id].title=newTitle;
+    notifyListeners();
+  }
+  void setDeadLineof({required int id,DateTime? newDeadline}){
+    _tasks[id].deadline=newDeadline;
     notifyListeners();
   }
 }
