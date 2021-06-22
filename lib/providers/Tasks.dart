@@ -8,7 +8,7 @@ class Tasks extends ChangeNotifier {
   }
 
   void addTask({required String taskName, DateTime? deadline, int? parent}) {
-    _tasks.add(Task(title: taskName, id: _tasks.length, parent: parent));
+    _tasks.add(Task(title: taskName, id: _tasks.length, parent: parent,deadline: deadline));
     if (parent != null) {
       _tasks[parent].haschildren = true;
     }

@@ -7,7 +7,6 @@ class Task {
   bool? done;
   bool haschildren = false;
   DateTime? deadline;
-  int numberOfChildren = 0;
   Task(
       {required this.title,
       this.id,
