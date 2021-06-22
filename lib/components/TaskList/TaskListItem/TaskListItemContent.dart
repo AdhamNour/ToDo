@@ -51,6 +51,7 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
                       .setDoneForAllChildrenof(
                           parentID: widget.targetTask.id!, value: newValue);
                 },
+                key: ObjectKey(widget.targetTask),
               ),
               title: Text(widget.targetTask.title),
               trailing: Row(

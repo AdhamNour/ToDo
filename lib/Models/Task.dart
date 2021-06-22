@@ -1,20 +1,19 @@
 import 'dart:convert';
 
-
 class Task {
   String title;
   final int? id;
   int? parent;
   bool? done;
-  bool haschildren=false;
+  bool haschildren = false;
   DateTime? deadline;
-  Task({
-    required this.title,
-    this.id,
-    this.parent,
-    this.done = false,
-    this.deadline
-  });
+  int numberOfChildren = 0;
+  Task(
+      {required this.title,
+      this.id,
+      this.parent,
+      this.done = false,
+      this.deadline});
 
   Task copyWith({
     String? title,
@@ -53,7 +52,7 @@ class Task {
 
   @override
   String toString() {
-    return 'Task(title: $title, id: $id, parent: $parent, done: $done)';
+    return 'Task(title: $title, id: $id, parent: $parent, done: $done, haschildren:$haschildren)';
   }
 
   @override

@@ -16,7 +16,7 @@ class _TaskListItemState extends State<TaskListItem> {
   bool passing = false;
   @override
   Widget build(BuildContext context) {
-    print('[AdhamNour][TaskListItem]${widget.targetTask}');
+    //print('[AdhamNour][TaskListItem]${widget.targetTask}');
     return DragTarget<int>(
       builder: (context, candidateData, rejectedData) {
         return LongPressDraggable<int>(
@@ -53,6 +53,7 @@ class _TaskListItemState extends State<TaskListItem> {
           passing = false;
         });
       },
+      
     );
   }
 }

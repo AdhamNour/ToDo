@@ -15,7 +15,7 @@ class TaskList extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: ListView.builder(
         itemBuilder: (ctx, index) {
-          return TaskListItem(targetTask: tasks[index],);
+          return TaskListItem(targetTask: tasks[index],key: ObjectKey(tasks[index]),);
         },
         itemCount: tasks.length,
         shrinkWrap: true,
