@@ -1,14 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:todo/Models/Task.dart';
+import 'package:todo/data/moor_database.dart';
 
 class Tasks extends ChangeNotifier {
+  //TODO: add the task manipulation to all functions
   List<Task> _tasks = [];
+  final db = AppDatabase();
+  Tasks() {
+    db.watchTasks().listen((event) {
+      _tasks=event.map((e) => Task(
+          title: e.title,
+          deadline: e.deadline,
+          done: e.done,
+          haschildren: e.hasChildren,
+          parent: e.parent,
+          id: e.id)).toList();
+    });
+  }
   List<Task> tasks({int? parent}) {
     return [..._tasks.where((element) => element.parent == parent).toList()];
   }
 
   void addTask({required String taskName, DateTime? deadline, int? parent}) {
-    _tasks.add(Task(title: taskName, id: _tasks.length, parent: parent,deadline: deadline));
+    _tasks.add(Task(
+        title: taskName,
+        id: _tasks.length,
+        parent: parent,
+        deadline: deadline));
     if (parent != null) {
       _tasks[parent].haschildren = true;
     }

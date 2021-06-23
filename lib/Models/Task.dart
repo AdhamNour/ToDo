@@ -5,14 +5,14 @@ class Task {
   final int? id;
   int? parent;
   bool? done;
-  bool haschildren = false;
+  bool haschildren ;
   DateTime? deadline;
   Task(
       {required this.title,
       this.id,
       this.parent,
       this.done = false,
-      this.deadline});
+      this.deadline, this.haschildren=false});
 
   Task copyWith({
     String? title,
