@@ -15,6 +15,7 @@ class Tasks extends ChangeNotifier {
           haschildren: e.hasChildren,
           parent: e.parent,
           id: e.id)).toList();
+          notifyListeners();
     });
   }
   List<Task> tasks({int? parent}) {
@@ -31,6 +32,7 @@ class Tasks extends ChangeNotifier {
       _tasks[parent].haschildren = true;
     }
     notifyListeners();
+    
   }
 
   void changeTitleOfTask({required String taskName, required int id}) {

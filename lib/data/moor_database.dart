@@ -18,9 +18,12 @@ class AppDatabase extends _$AppDatabase {
       : super(FlutterQueryExecutor(path: 'db.sql', logStatements: true));
     
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   Future<List<TaskModel> > getAllTasks() => select(tasks).get();
   Stream<List<TaskModel>> watchTasks() => select(tasks).watch();
-  //TODO: add Create,Update and Delete functions 
+  Future<int> insertNewTask(TaskModel taskModel) => into(tasks).insert(taskModel);
+  Future updateTask(TaskModel taskModel) => update(tasks).replace(taskModel);
+  Future deleteTask(TaskModel taskModel) => delete(tasks).delete(taskModel);
+
 }
