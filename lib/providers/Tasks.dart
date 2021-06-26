@@ -16,7 +16,7 @@ class Tasks extends ChangeNotifier {
             done: e.done,
             haschildren: e.hasChildren,
             parent: e.parent,
-            id: e.id-1);
+            id: e.id - 1);
       }).toList();
       notifyListeners();
     });
@@ -24,7 +24,7 @@ class Tasks extends ChangeNotifier {
 
   TaskModel _convertTask2TaskModel(Task task) {
     return TaskModel(
-        id: task.id!+1,
+        id: task.id! + 1,
         title: task.title,
         done: task.done!,
         hasChildren: task.haschildren,
@@ -106,5 +106,21 @@ class Tasks extends ChangeNotifier {
     _tasks[id].deadline = newDeadline;
     notifyListeners();
     db.updateTask(_convertTask2TaskModel(_tasks[id]));
+  }
+
+  void deleteTask(int id) {
+    List<Task> targetTasks =
+        _tasks.where((element) => element.parent == id).toList()..add(_tasks[id]);
+    for (var i = 0; i < targetTasks.length; i++) {
+      targetTasks = [
+        ...targetTasks,
+        ..._tasks
+            .where((element) => element.parent == targetTasks[i].id)
+            .toList()
+      ];
+    }
+    targetTasks.forEach((element) {
+      db.deleteTask(_convertTask2TaskModel(element));
+    });
   }
 }

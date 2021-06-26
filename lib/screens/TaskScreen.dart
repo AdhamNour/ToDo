@@ -19,10 +19,17 @@ class _TaskScreenState extends State<TaskScreen> {
     final task = ModalRoute.of(context)!.settings.arguments as Task;
     final TextEditingController _controller =
         new TextEditingController(text: task.title);
-    print(task);
     return Scaffold(
       appBar: AppBar(
         title: Text(task.title),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Provider.of<Tasks>(context, listen: false).deleteTask(task.id??-1);
+                Navigator.of(context).pop();
+              },
+              icon: Icon(Icons.delete_rounded))
+        ],
       ),
       body: Column(
         children: [
@@ -38,7 +45,8 @@ class _TaskScreenState extends State<TaskScreen> {
               },
               decoration: InputDecoration(
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15))),hintText: "Your Task Title..."),
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                  hintText: "Your Task Title..."),
             ),
           ),
           Expanded(
