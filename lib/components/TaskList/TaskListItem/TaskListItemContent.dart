@@ -56,7 +56,9 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
               title: Text(widget.targetTask.title),
               trailing: Row(
                 children: [
-                  if(widget.targetTask.deadline!=null) Text(DateFormat('d/M/y').format(widget.targetTask.deadline!)),
+                  if (widget.targetTask.deadline != null)
+                    Text(DateFormat('d/M/y')
+                        .format(widget.targetTask.deadline!)),
                   if (widget.targetTask.haschildren)
                     IconButton(
                         onPressed: () {
@@ -64,12 +66,14 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
                             expanded = !expanded;
                           });
                         },
-                        icon: Icon(Icons.arrow_drop_down)),
+                        icon: Icon(expanded
+                            ? Icons.arrow_drop_up
+                            : Icons.arrow_drop_down)),
                 ],
                 mainAxisSize: MainAxisSize.min,
               ),
-              onTap: () =>
-                  Navigator.of(context).pushNamed(TaskScreen.routeName,arguments: widget.targetTask),
+              onTap: () => Navigator.of(context).pushNamed(TaskScreen.routeName,
+                  arguments: widget.targetTask),
             ),
             if (expanded && widget.targetTask.haschildren)
               Container(

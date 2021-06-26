@@ -8,21 +8,30 @@ class Tasks extends ChangeNotifier {
   final db = AppDatabase();
   Tasks() {
     db.watchTasks().listen((event) {
-      _tasks = event
-          .map((e) {
-            print(e.deadline);
-            return Task(
-              title: e.title,
-              deadline: e.deadline,
-              done: e.done,
-              haschildren: e.hasChildren,
-              parent: e.parent,
-              id: e.id);
-          })
-          .toList();
+      _tasks = event.map((e) {
+        print(e.toString());
+        return Task(
+            title: e.title,
+            deadline: e.deadline,
+            done: e.done,
+            haschildren: e.hasChildren,
+            parent: e.parent,
+            id: e.id-1);
+      }).toList();
       notifyListeners();
     });
   }
+
+  TaskModel _convertTask2TaskModel(Task task) {
+    return TaskModel(
+        id: task.id!+1,
+        title: task.title,
+        done: task.done!,
+        hasChildren: task.haschildren,
+        parent: task.parent,
+        deadline: task.deadline);
+  }
+
   List<Task> tasks({int? parent}) {
     return [..._tasks.where((element) => element.parent == parent).toList()];
   }
@@ -50,6 +59,7 @@ class Tasks extends ChangeNotifier {
   void changeTitleOfTask({required String taskName, required int id}) {
     _tasks[id].title = taskName;
     notifyListeners();
+    db.updateTask(_convertTask2TaskModel(_tasks[id]));
   }
 
   void setParentOf({int? parentID, required int childID}) {
@@ -64,6 +74,13 @@ class Tasks extends ChangeNotifier {
           _tasks.indexWhere((element) => element.parent == prevParent) != -1;
     }
     notifyListeners();
+    db.updateTask(_convertTask2TaskModel(_tasks[childID]));
+    if (parentID != null) {
+      db.updateTask(_convertTask2TaskModel(_tasks[parentID]));
+    }
+    if (prevParent != null) {
+      db.updateTask(_convertTask2TaskModel(_tasks[prevParent]));
+    }
   }
 
   void setDoneForAllChildrenof({required int parentID, required bool? value}) {
@@ -80,15 +97,14 @@ class Tasks extends ChangeNotifier {
       _tasks[x].done = value;
     }
     notifyListeners();
-  }
-
-  void setTitleOf({required int id, required String newTitle}) {
-    _tasks[id].title = newTitle;
-    notifyListeners();
+    targetTasks.forEach((element) {
+      db.updateTask(_convertTask2TaskModel(element));
+    });
   }
 
   void setDeadLineof({required int id, DateTime? newDeadline}) {
     _tasks[id].deadline = newDeadline;
     notifyListeners();
+    db.updateTask(_convertTask2TaskModel(_tasks[id]));
   }
 }
