@@ -18,7 +18,7 @@ class AppDatabase extends _$AppDatabase {
       : super(FlutterQueryExecutor(path: 'db.sql', logStatements: true));
     
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 1;
 
   Future<List<TaskModel> > getAllTasks() => select(tasks).get();
   Stream<List<TaskModel>> watchTasks() => select(tasks).watch();

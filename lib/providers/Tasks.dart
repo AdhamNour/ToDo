@@ -8,14 +8,19 @@ class Tasks extends ChangeNotifier {
   final db = AppDatabase();
   Tasks() {
     db.watchTasks().listen((event) {
-      _tasks=event.map((e) => Task(
-          title: e.title,
-          deadline: e.deadline,
-          done: e.done,
-          haschildren: e.hasChildren,
-          parent: e.parent,
-          id: e.id)).toList();
-          notifyListeners();
+      _tasks = event
+          .map((e) {
+            print(e.deadline);
+            return Task(
+              title: e.title,
+              deadline: e.deadline,
+              done: e.done,
+              haschildren: e.hasChildren,
+              parent: e.parent,
+              id: e.id);
+          })
+          .toList();
+      notifyListeners();
     });
   }
   List<Task> tasks({int? parent}) {
@@ -23,6 +28,7 @@ class Tasks extends ChangeNotifier {
   }
 
   void addTask({required String taskName, DateTime? deadline, int? parent}) {
+    print(deadline);
     _tasks.add(Task(
         title: taskName,
         id: _tasks.length,
@@ -32,7 +38,13 @@ class Tasks extends ChangeNotifier {
       _tasks[parent].haschildren = true;
     }
     notifyListeners();
-    
+    db.insertNewTask(TaskModel(
+        id: _tasks.length,
+        title: taskName,
+        done: false,
+        hasChildren: false,
+        parent: parent,
+        deadline: deadline));
   }
 
   void changeTitleOfTask({required String taskName, required int id}) {

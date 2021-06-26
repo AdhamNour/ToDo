@@ -56,7 +56,7 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
               title: Text(widget.targetTask.title),
               trailing: Row(
                 children: [
-                  if(widget.targetTask.deadline!=null) Text(DateFormat('d/M/y').format(DateTime.now())),
+                  if(widget.targetTask.deadline!=null) Text(DateFormat('d/M/y').format(widget.targetTask.deadline!)),
                   if (widget.targetTask.haschildren)
                     IconButton(
                         onPressed: () {

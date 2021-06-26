@@ -63,8 +63,10 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
             onPressed: () => Navigator.of(context).pop(),
             child: Text('Cancel')),
         OutlinedButton(
-            onPressed: () => Navigator.of(context)
-                .pop({'title': widget._controller.text, 'deadline': date}),
+            onPressed: () {
+              Navigator.of(context)
+                .pop({'title': widget._controller.text, 'deadline': date});
+            },
             child: Text('Okay'))
       ],
     );
