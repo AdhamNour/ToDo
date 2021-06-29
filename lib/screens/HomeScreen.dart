@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:todo/components/AddingTaskFloatingActionButton.dart';
 import 'package:todo/components/AppDrawer/Drawer.dart';
 import 'package:todo/components/TaskList/TaskList.dart';
-import 'package:todo/providers/Tasks.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final tasks = Provider.of<Tasks>(context);
-
+    final int? filterOffset = ModalRoute.of(context)!.settings.arguments as int?;
+    print('home screen: $filterOffset');
     return Scaffold(
       appBar: AppBar(
         title: Text("AN ToDo List")

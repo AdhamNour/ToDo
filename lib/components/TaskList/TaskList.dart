@@ -4,13 +4,23 @@ import 'package:todo/components/TaskList/TaskListItem/TaskListItem.dart';
 import 'package:todo/providers/Tasks.dart';
 
 class TaskList extends StatelessWidget {
-  final int? parent;
-  const TaskList({Key? key, this.parent}) : super(key: key);
+  final int? parent, filterOffset;
+  const TaskList({Key? key, this.parent, this.filterOffset}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final tasksProvider = Provider.of<Tasks>(context);
-    final tasks =tasksProvider.tasks(parent: parent);
+    final tasks = tasksProvider.tasks(parent: parent).where((element) {
+      if (filterOffset == null) {
+        return true;
+      }
+      if (element.deadline != null) {
+        return DateTime.now()
+            .add(Duration(days: filterOffset!))
+            .isBefore(element.deadline!);
+      }
+      return false;
+    }).toList();
     final size = MediaQuery.of(context).size;
     //print('[Adham][$parent] $tasks');
     return Padding(
@@ -43,7 +53,8 @@ class TaskList extends StatelessWidget {
                     },
                     itemCount: tasks.length,
                     shrinkWrap: true,
-                  ),height: size.height,
+                  ),
+            height: size.height,
           );
         },
         onAccept: (data) {
