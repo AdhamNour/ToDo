@@ -10,6 +10,7 @@ class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tasksProvider = Provider.of<Tasks>(context);
+    print('TaskList $filterOffset');
     final tasks = tasksProvider.tasks(parent: parent).where((element) {
       if (filterOffset == null) {
         return true;

@@ -34,6 +34,7 @@ class AppDrawer extends StatelessWidget {
                   onTap: () {
                     // Update the state of the app.
                     // ...
+                    Navigator.of(context).pushNamed('/',arguments: 7);
                   },
                 ),
                 ListTile(title: Text('Costom Deadline'))

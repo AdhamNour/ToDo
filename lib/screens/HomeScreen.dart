@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
         title: Text("AN ToDo List")
       ),
       drawer: AppDrawer(),
-      body: TaskList(),
+      body: TaskList(filterOffset: filterOffset,),
       floatingActionButton: AddingTaskFloatingActionButton(),
     );
   }
