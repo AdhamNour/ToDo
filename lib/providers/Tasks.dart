@@ -3,7 +3,6 @@ import 'package:todo/Models/Task.dart';
 import 'package:todo/data/moor_database.dart';
 
 class Tasks extends ChangeNotifier {
-  //TODO: add the task manipulation to all functions
   List<Task> _tasks = [];
   final db = AppDatabase();
   Tasks() {
@@ -85,7 +84,7 @@ class Tasks extends ChangeNotifier {
 
   void setDoneForAllChildrenof({required int parentID, required bool? value}) {
     List<Task> targetTasks =
-        _tasks.where((element) => element.parent == parentID).toList();
+        _tasks.where((element) => element.parent == parentID||element.id==parentID).toList();
     for (var i = 0; i < targetTasks.length; i++) {
       targetTasks = [
         ...targetTasks,

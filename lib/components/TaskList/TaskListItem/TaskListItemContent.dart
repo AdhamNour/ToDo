@@ -43,8 +43,6 @@ class _TaskListItemContentState extends State<TaskListItemContent> {
                 value: checked,
                 onChanged: (newValue) {
                   setState(() {
-                    widget.targetTask.done = newValue;
-                    checked = newValue;
                     expanded = false;
                   });
                   Provider.of<Tasks>(context, listen: false)
