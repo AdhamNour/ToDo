@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/components/TaskList/TaskListItem/TaskListItem.dart';
 import 'package:todo/providers/Tasks.dart';
@@ -12,13 +13,14 @@ class TaskList extends StatelessWidget {
     final tasksProvider = Provider.of<Tasks>(context);
     print('TaskList $filterOffset');
     final tasks = tasksProvider.tasks(parent: parent).where((element) {
+
       if (filterOffset == null) {
         return true;
       }
       if (element.deadline != null) {
         return DateTime.now()
             .add(Duration(days: filterOffset!))
-            .isBefore(element.deadline!);
+            .isAfter(element.deadline!);
       }
       return false;
     }).toList();
