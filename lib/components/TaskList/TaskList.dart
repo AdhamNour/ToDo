@@ -11,9 +11,7 @@ class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tasksProvider = Provider.of<Tasks>(context);
-    print('TaskList $filterOffset');
     final tasks = tasksProvider.tasks(parent: parent).where((element) {
-
       if (filterOffset == null) {
         return true;
       }
@@ -25,7 +23,6 @@ class TaskList extends StatelessWidget {
       return false;
     }).toList();
     final size = MediaQuery.of(context).size;
-    //print('[Adham][$parent] $tasks');
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: DragTarget<int>(
@@ -39,7 +36,9 @@ class TaskList extends StatelessWidget {
                           size: 130, color: Colors.blue[800]),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text('No Tasks',
+                        child: Text(
+                            'No Tasks' +
+                                '${filterOffset != null ? " due at ${DateFormat('d/M/y').format(DateTime.now().add(Duration(days: filterOffset!)))}" : ""}',
                             style: TextStyle(
                                 fontSize: 130 / 4,
                                 color: Colors.blueAccent[700])),

@@ -9,7 +9,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int? filterOffset = ModalRoute.of(context)!.settings.arguments as int?;
-    print('home screen: $filterOffset');
     return Scaffold(
       appBar: AppBar(
         title: Text("AN ToDo List")

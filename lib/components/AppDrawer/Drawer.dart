@@ -32,12 +32,30 @@ class AppDrawer extends StatelessWidget {
                 ListTile(
                   title: Text('Next week Tasks'),
                   onTap: () {
-                    // Update the state of the app.
-                    // ...
-                    Navigator.of(context).pushNamed('/',arguments: 7);
+                    Navigator.of(context).popAndPushNamed('/', arguments: 7);
                   },
                 ),
-                ListTile(title: Text('Costom Deadline'))
+                ListTile(
+                    title: Text('Costom Deadline'),
+                    onTap: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2100, 12, 31))
+                          .then((value) {
+                        if (value == null) {
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Unspecified Date is not allowed in custom Deadline filtering")));
+                                  return;
+                        }
+                        Navigator.of(context).popAndPushNamed('/',
+                            arguments:
+                                value.difference(DateTime.now()).inDays);
+                      });
+                    })
               ],
             ),
           ),
